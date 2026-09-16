@@ -312,6 +312,115 @@
     display:none;
   }
   .hidden-step{display:none !important;}
+  .field-label{
+    font-size:13px;
+    font-weight:700;
+    color:var(--ink);
+    margin:16px 0 6px;
+  }
+  .field-label:first-of-type{margin-top:4px;}
+  .or-divider{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:16px 0 0;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  .or-divider::before,.or-divider::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:#eee0f7;
+  }
+  .phone-row{
+    display:flex;
+    gap:8px;
+  }
+  .country-btn{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    border:2px solid #eee0f7;
+    background:#fbf8ff;
+    border-radius:16px;
+    padding:0 12px;
+    font-size:15px;
+    font-weight:600;
+    white-space:nowrap;
+    flex-shrink:0;
+    min-width:96px;
+  }
+  .country-btn .flag{font-size:18px;}
+  .country-btn .chev{font-size:11px;color:var(--muted);margin-left:2px;}
+  .phone-row .field{flex:1;min-width:0;}
+  .country-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(43,30,62,.55);
+    backdrop-filter:blur(3px);
+    z-index:50;
+    display:none;
+    align-items:flex-end;
+  }
+  .country-overlay.open{display:flex;}
+  .country-sheet{
+    background:#fff;
+    width:100%;
+    max-height:78vh;
+    border-radius:24px 24px 0 0;
+    display:flex;
+    flex-direction:column;
+    animation:sheetUp .25s ease;
+  }
+  @keyframes sheetUp{
+    from{transform:translateY(30px);opacity:0;}
+    to{transform:translateY(0);opacity:1;}
+  }
+  .country-sheet-head{
+    padding:16px 18px 10px;
+    border-bottom:1px solid #f0e8fb;
+  }
+  .country-sheet-head h3{margin:0 0 10px;font-size:16px;}
+  .country-search{
+    width:100%;
+    border:2px solid #eee0f7;
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:15px;
+    background:#fbf8ff;
+    outline:none;
+  }
+  .country-search:focus{border-color:var(--accent);}
+  .country-list{
+    overflow-y:auto;
+    padding:6px 8px 18px;
+  }
+  .country-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 12px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:15px;
+  }
+  .country-row:active{background:#f6ecff;}
+  .country-row .flag{font-size:20px;}
+  .country-row .dial{color:var(--muted);margin-left:auto;font-weight:600;font-size:14px;}
+  .country-close{
+    background:none;
+    border:none;
+    font-size:20px;
+    color:var(--muted);
+    position:absolute;
+    right:14px;
+    top:14px;
+    padding:6px;
+  }
   @media (max-width:380px){
     .step-title{font-size:19px;}
     .card{padding:22px 18px 22px;}
@@ -365,15 +474,31 @@
       </div>
     </div>
 
-    <div class="card hidden-step" data-step="2">
+    <div class="card hidden-step" data-step="2" id="contactStep">
       <span class="step-emoji">📬</span>
       <p class="step-kicker">Para escribirte</p>
-      <h1 class="step-title">Déjame tu correo o WhatsApp</h1>
-      <p class="step-sub">Así te puedo contactar si surge algo interesante para ti 😉</p>
-      <input class="field" type="text" name="contacto" placeholder="correo@ejemplo.com o número de WhatsApp" required>
+      <h1 class="step-title">Déjame tu correo y/o WhatsApp</h1>
+      <p class="step-sub">Compárteme al menos uno de los dos, el que prefieras. Si quieres darme ambos, mejor 😉</p>
+
+      <p class="field-label">Correo electrónico</p>
+      <input class="field" type="email" name="email" id="emailInput" placeholder="correo@ejemplo.com">
+
+      <div class="or-divider">o también</div>
+
+      <p class="field-label">WhatsApp</p>
+      <div class="phone-row">
+        <button type="button" class="country-btn" id="countryBtn">
+          <span class="flag" id="countryFlag">🌐</span>
+          <span id="countryDial">Código</span>
+          <span class="chev">▾</span>
+        </button>
+        <input class="field" type="tel" inputmode="numeric" pattern="[0-9]*" name="telefono" id="phoneInput" placeholder="Número" disabled>
+      </div>
+      <p class="hint" id="phoneHint">Primero elige tu país para habilitar el campo del número.</p>
+
       <div class="nav">
         <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn">Siguiente</button>
+        <button type="button" class="btn-primary next-btn" id="contactNextBtn" disabled>Siguiente</button>
       </div>
     </div>
 
@@ -412,11 +537,15 @@
         <label class="chip"><input type="checkbox"><span class="emo">🤖</span> Inteligencia artificial</label>
         <label class="chip"><input type="checkbox"><span class="emo">🧴</span> Belleza / skincare</label>
         <label class="chip"><input type="checkbox"><span class="emo">🎧</span> Escuchar y entender a otros</label>
-        <label class="chip"><input type="checkbox"><span class="emo">✨</span> Otra cosa</label>
+        <label class="chip"><input type="checkbox" id="otroTalentoCheck"><span class="emo">✨</span> Otra cosa</label>
+      </div>
+      <div id="otroTalentoWrap" style="display:none;">
+        <p class="field-label">Cuéntame cuál</p>
+        <input class="field" type="text" id="otroTalentoInput" placeholder="Especifica en qué eres bueno/a">
       </div>
       <div class="nav">
         <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn">Siguiente</button>
+        <button type="button" class="btn-primary next-btn" id="talentosNextBtn">Siguiente</button>
       </div>
     </div>
 
@@ -435,12 +564,13 @@
       <span class="step-emoji">🎯</span>
       <p class="step-kicker">Pregunta 4</p>
       <h1 class="step-title">¿Qué te gustaría que pase en los próximos meses?</h1>
-      <div class="options" data-name="meta" data-type="single">
-        <label class="opt"><input type="radio" name="meta"><span class="emo">💵</span> Ganar un ingreso extra</label>
-        <label class="opt"><input type="radio" name="meta"><span class="emo">📈</span> Crecer profesionalmente</label>
-        <label class="opt"><input type="radio" name="meta"><span class="emo">🧠</span> Aprender algo nuevo</label>
-        <label class="opt"><input type="radio" name="meta"><span class="emo">🏆</span> Tener mi propio negocio o marca</label>
-        <label class="opt"><input type="radio" name="meta"><span class="emo">👀</span> Solo tenía curiosidad</label>
+      <p class="step-sub">Puedes elegir una sola opción o varias, lo que sientas que aplica para ti.</p>
+      <div class="options" data-name="meta" data-type="multi">
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">💵</span> Ganar un ingreso extra</label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">📈</span> Crecer profesionalmente</label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">🧠</span> Aprender algo nuevo</label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">🏆</span> Tener mi propio negocio o marca</label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">👀</span> Solo tenía curiosidad</label>
       </div>
       <div class="nav">
         <button type="button" class="btn-ghost back-btn">Atrás</button>
@@ -538,6 +668,17 @@
     </div>
   </form>
 
+  <div class="country-overlay" id="countryOverlay">
+    <div class="country-sheet">
+      <div class="country-sheet-head">
+        <h3>Elige tu país</h3>
+        <button type="button" class="country-close" id="countryClose">✕</button>
+        <input type="text" class="country-search" id="countrySearch" placeholder="Busca por país o código, ej: Honduras o 504">
+      </div>
+      <div class="country-list" id="countryList"></div>
+    </div>
+  </div>
+
   <div class="card" id="screen-success">
     <span class="step-emoji">🎉</span>
     <h1 class="step-title">¡Listo! Ya me llegó todo 💫</h1>
@@ -581,6 +722,10 @@
       var checked = group.querySelector('input[type=radio]:checked');
       if(!checked) return false;
     }
+    if(group && group.dataset.type === 'multi'){
+      var anyChecked = group.querySelector('input[type=checkbox]:checked');
+      if(!anyChecked) return false;
+    }
     return true;
   }
 
@@ -591,6 +736,9 @@
     var group = step.querySelector('.options, .scale');
     if(group && group.dataset.type === 'single'){
       btn.disabled = !group.querySelector('input[type=radio]:checked');
+    }
+    if(group && group.dataset.type === 'multi'){
+      btn.disabled = !group.querySelector('input[type=checkbox]:checked');
     }
   }
 
@@ -614,6 +762,7 @@
         var input = chip.querySelector('input');
         input.checked = !input.checked;
         chip.classList.toggle('selected', input.checked);
+        if(input.id === 'otroTalentoCheck') refreshTalentosNextBtn();
       });
     });
     step.querySelectorAll('input[type=text], textarea').forEach(function(f){
@@ -623,6 +772,129 @@
       });
     });
   });
+
+  var otroTalentoCheck = document.getElementById('otroTalentoCheck');
+  var otroTalentoWrap = document.getElementById('otroTalentoWrap');
+  var otroTalentoInput = document.getElementById('otroTalentoInput');
+  var talentosNextBtn = document.getElementById('talentosNextBtn');
+  function refreshTalentosNextBtn(){
+    if(otroTalentoCheck.checked){
+      otroTalentoWrap.style.display = 'block';
+      talentosNextBtn.disabled = !otroTalentoInput.value.trim();
+    } else {
+      otroTalentoWrap.style.display = 'none';
+      talentosNextBtn.disabled = false;
+    }
+  }
+  otroTalentoCheck.addEventListener('change', refreshTalentosNextBtn);
+  otroTalentoInput.addEventListener('input', refreshTalentosNextBtn);
+
+  // ------- Selector de país / WhatsApp -------
+  var COUNTRIES = [
+    {name:'Argentina', flag:'🇦🇷', dial:'+54', digits:10},
+    {name:'Bolivia', flag:'🇧🇴', dial:'+591', digits:8},
+    {name:'Brasil', flag:'🇧🇷', dial:'+55', digits:11},
+    {name:'Canadá', flag:'🇨🇦', dial:'+1', digits:10},
+    {name:'Chile', flag:'🇨🇱', dial:'+56', digits:9},
+    {name:'Colombia', flag:'🇨🇴', dial:'+57', digits:10},
+    {name:'Costa Rica', flag:'🇨🇷', dial:'+506', digits:8},
+    {name:'Cuba', flag:'🇨🇺', dial:'+53', digits:8},
+    {name:'Ecuador', flag:'🇪🇨', dial:'+593', digits:9},
+    {name:'El Salvador', flag:'🇸🇻', dial:'+503', digits:8},
+    {name:'España', flag:'🇪🇸', dial:'+34', digits:9},
+    {name:'Estados Unidos', flag:'🇺🇸', dial:'+1', digits:10},
+    {name:'Francia', flag:'🇫🇷', dial:'+33', digits:9},
+    {name:'Alemania', flag:'🇩🇪', dial:'+49', digits:11},
+    {name:'Guatemala', flag:'🇬🇹', dial:'+502', digits:8},
+    {name:'Honduras', flag:'🇭🇳', dial:'+504', digits:8},
+    {name:'Italia', flag:'🇮🇹', dial:'+39', digits:10},
+    {name:'México', flag:'🇲🇽', dial:'+52', digits:10},
+    {name:'Nicaragua', flag:'🇳🇮', dial:'+505', digits:8},
+    {name:'Panamá', flag:'🇵🇦', dial:'+507', digits:8},
+    {name:'Paraguay', flag:'🇵🇾', dial:'+595', digits:9},
+    {name:'Perú', flag:'🇵🇪', dial:'+51', digits:9},
+    {name:'Portugal', flag:'🇵🇹', dial:'+351', digits:9},
+    {name:'Puerto Rico', flag:'🇵🇷', dial:'+1', digits:10},
+    {name:'Reino Unido', flag:'🇬🇧', dial:'+44', digits:10},
+    {name:'República Dominicana', flag:'🇩🇴', dial:'+1', digits:10},
+    {name:'Uruguay', flag:'🇺🇾', dial:'+598', digits:8},
+    {name:'Venezuela', flag:'🇻🇪', dial:'+58', digits:10}
+  ];
+
+  var selectedCountry = null;
+  var countryBtn = document.getElementById('countryBtn');
+  var countryFlag = document.getElementById('countryFlag');
+  var countryDial = document.getElementById('countryDial');
+  var countryOverlay = document.getElementById('countryOverlay');
+  var countryClose = document.getElementById('countryClose');
+  var countrySearch = document.getElementById('countrySearch');
+  var countryList = document.getElementById('countryList');
+  var phoneInput = document.getElementById('phoneInput');
+  var phoneHint = document.getElementById('phoneHint');
+  var emailInput = document.getElementById('emailInput');
+  var contactNextBtn = document.getElementById('contactNextBtn');
+
+  function renderCountryList(list){
+    countryList.innerHTML = list.map(function(c, idx){
+      return '<div class="country-row" data-idx="' + COUNTRIES.indexOf(c) + '">' +
+        '<span class="flag">' + c.flag + '</span><span>' + c.name + '</span>' +
+        '<span class="dial">' + c.dial + '</span></div>';
+    }).join('');
+  }
+  renderCountryList(COUNTRIES);
+
+  countryList.addEventListener('click', function(e){
+    var row = e.target.closest('.country-row');
+    if(!row) return;
+    var country = COUNTRIES[parseInt(row.dataset.idx, 10)];
+    selectedCountry = country;
+    countryFlag.textContent = country.flag;
+    countryDial.textContent = country.dial;
+    phoneInput.disabled = false;
+    phoneInput.value = '';
+    phoneInput.maxLength = country.digits;
+    phoneInput.placeholder = 'Número (' + country.digits + ' dígitos)';
+    phoneHint.textContent = 'Solo escribe tus ' + country.digits + ' dígitos, sin el código de país.';
+    countryOverlay.classList.remove('open');
+    refreshContactNextBtn();
+    phoneInput.focus();
+  });
+
+  countryBtn.addEventListener('click', function(){
+    countryOverlay.classList.add('open');
+    countrySearch.value = '';
+    renderCountryList(COUNTRIES);
+    setTimeout(function(){ countrySearch.focus(); }, 150);
+  });
+  countryClose.addEventListener('click', function(){ countryOverlay.classList.remove('open'); });
+  countryOverlay.addEventListener('click', function(e){
+    if(e.target === countryOverlay) countryOverlay.classList.remove('open');
+  });
+  countrySearch.addEventListener('input', function(){
+    var q = countrySearch.value.trim().toLowerCase();
+    var filtered = COUNTRIES.filter(function(c){
+      return c.name.toLowerCase().indexOf(q) !== -1 || c.dial.indexOf(q) !== -1;
+    });
+    renderCountryList(filtered);
+  });
+
+  phoneInput.addEventListener('input', function(){
+    var digitsOnly = phoneInput.value.replace(/[^0-9]/g, '');
+    if(selectedCountry) digitsOnly = digitsOnly.slice(0, selectedCountry.digits);
+    phoneInput.value = digitsOnly;
+    refreshContactNextBtn();
+  });
+  phoneInput.addEventListener('keypress', function(e){
+    if(e.key && !/[0-9]/.test(e.key)) e.preventDefault();
+  });
+
+  function refreshContactNextBtn(){
+    var emailOk = emailInput.value.trim() !== '' && emailInput.checkValidity();
+    var phoneOk = selectedCountry !== null && phoneInput.value.length === selectedCountry.digits;
+    contactNextBtn.disabled = !(emailOk || phoneOk);
+  }
+  emailInput.addEventListener('input', refreshContactNextBtn);
+  // --------------------------------------------
 
   document.querySelectorAll('.next-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -682,22 +954,29 @@
     fd.append('from_name', 'Formulario Cuéntame de ti');
 
     fd.append('Nombre', form.nombre.value);
-    fd.append('Contacto', form.contacto.value);
+    fd.append('Correo', emailInput.value.trim() || '(no compartido)');
+    fd.append('WhatsApp', (selectedCountry && phoneInput.value) ? (selectedCountry.dial + ' ' + phoneInput.value) : '(no compartido)');
 
     var ocupacion = form.querySelector('input[name=ocupacion]:checked');
     fd.append('A que se dedica', ocupacion ? ocupacion.closest('.opt').textContent.trim() : '');
 
-    var talentos = form.querySelectorAll('input[name=talentos]:checked, .chips input:checked');
     var talentosText = [];
     document.querySelectorAll('[data-name=talentos] .chip').forEach(function(chip){
-      if(chip.querySelector('input').checked) talentosText.push(chip.textContent.trim());
+      var chipInput = chip.querySelector('input');
+      if(chipInput.checked && chipInput.id !== 'otroTalentoCheck') talentosText.push(chip.textContent.trim());
     });
+    if(otroTalentoCheck.checked && otroTalentoInput.value.trim()){
+      talentosText.push(otroTalentoInput.value.trim());
+    }
     fd.append('En que es bueno-a', talentosText.join(', ') || 'No seleccionó');
 
     fd.append('Superpoder', form.superpoder.value || '(sin respuesta)');
 
-    var meta = form.querySelector('input[name=meta]:checked');
-    fd.append('Meta proximos meses', meta ? meta.closest('.opt').textContent.trim() : '');
+    var metaText = [];
+    document.querySelectorAll('[data-name=meta] .opt').forEach(function(opt){
+      if(opt.querySelector('input').checked) metaText.push(opt.textContent.trim());
+    });
+    fd.append('Meta proximos meses', metaText.join(', ') || 'No seleccionó');
 
     var interes = form.querySelector('input[name=interes_digital]:checked');
     fd.append('Interes en lo digital', interes ? interes.closest('.opt').textContent.trim() : '');
