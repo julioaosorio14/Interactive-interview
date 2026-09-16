@@ -29,25 +29,25 @@
     --tint-bg:#f6ecff;
   }
   :root[data-theme="dark"]{
-    --ink:#f1eefc;
-    --card:#211f30;
-    --accent:#9b6bff;
-    --accent2:#c77dff;
-    --muted:#a99bc9;
-    --shadow-color:rgba(0,0,0,.6);
-    --page-bg:radial-gradient(circle at 15% -10%, #3a2a5e, #0f0c18 55%);
-    --field-bg:#2a2740;
-    --field-border:#4b3d78;
-    --ghost-bg:#2e2a45;
-    --opt-selected-bg:linear-gradient(135deg,#3a2c5c,#4a2f66);
-    --chip-selected-bg:linear-gradient(135deg,#4a2f66,#3a2c5c);
-    --track-bg:rgba(255,255,255,.1);
-    --toggle-bg:rgba(255,255,255,.12);
-    --tint-bg:#372a52;
+    --ink:#eceafc;
+    --card:#232149;
+    --accent:#6c6bff;
+    --accent2:#9b6bff;
+    --muted:#a5a0d6;
+    --shadow-color:rgba(0,0,0,.55);
+    --page-bg:radial-gradient(circle at 18% -10%, #4a3d9e 0%, #211c46 42%, #12102a 78%);
+    --field-bg:#2c2a5c;
+    --field-border:#473f8c;
+    --ghost-bg:#302c63;
+    --opt-selected-bg:linear-gradient(135deg,#3f3a80,#5b4fd6);
+    --chip-selected-bg:linear-gradient(135deg,#5b4fd6,#3f3a80);
+    --track-bg:rgba(255,255,255,.12);
+    --toggle-bg:rgba(255,255,255,.14);
+    --tint-bg:#37316e;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  html{background:#0f0c18;}
+  html{background:#12102a;}
   body{
     font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     min-height:100vh;
@@ -106,14 +106,14 @@
   .header-right{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:8px;
   }
-  .theme-toggle{
-    width:36px;
+  .theme-toggle,.lang-toggle{
     height:36px;
-    border-radius:50%;
+    border-radius:18px;
     background:var(--toggle-bg);
     border:none;
+    color:#fff;
     font-size:17px;
     display:flex;
     align-items:center;
@@ -122,7 +122,14 @@
     backdrop-filter:blur(6px);
     transition:background .25s ease,transform .15s ease;
   }
-  .theme-toggle:active{transform:scale(.88);}
+  .theme-toggle{width:36px;}
+  .lang-toggle{
+    width:44px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.03em;
+  }
+  .theme-toggle:active,.lang-toggle:active{transform:scale(.88);}
   .progress-track{
     position:sticky;
     top:0;
@@ -355,7 +362,7 @@
     to{transform:translateY(110vh) rotate(720deg);opacity:.2;}
   }
   .error-msg{
-    color:#d63384;
+    color:#ff7fb0;
     font-size:13px;
     font-weight:600;
     margin-top:10px;
@@ -396,6 +403,7 @@
     gap:6px;
     border:2px solid var(--field-border);
     background:var(--field-bg);
+    color:var(--ink);
     border-radius:16px;
     padding:0 12px;
     font-size:15px;
@@ -410,7 +418,7 @@
   .country-overlay{
     position:fixed;
     inset:0;
-    background:rgba(43,30,62,.55);
+    background:rgba(10,8,25,.6);
     backdrop-filter:blur(3px);
     z-index:50;
     display:none;
@@ -434,6 +442,7 @@
   .country-sheet-head{
     padding:16px 18px 10px;
     border-bottom:1px solid var(--field-border);
+    position:relative;
   }
   .country-sheet-head h3{margin:0 0 10px;font-size:16px;}
   .country-search{
@@ -443,6 +452,7 @@
     padding:12px 14px;
     font-size:15px;
     background:var(--field-bg);
+    color:var(--ink);
     outline:none;
   }
   .country-search:focus{border-color:var(--accent);}
@@ -499,9 +509,10 @@
 
 <div class="wrap">
   <header class="top">
-    <div class="brand">✨ Cuéntame de ti</div>
+    <div class="brand">💻 <span data-i18n="brand">Cuéntame de ti</span></div>
     <div class="header-right">
       <div class="brand" id="stepCounter" style="font-size:12px;opacity:.85;">1/13</div>
+      <button type="button" class="lang-toggle" id="langToggle">EN</button>
       <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar a modo oscuro">🌙</button>
     </div>
   </header>
@@ -511,213 +522,213 @@
   <form id="interviewForm">
     <div class="card" data-step="0">
       <span class="step-emoji">👋</span>
-      <p class="step-kicker">Antes de empezar</p>
-      <h1 class="step-title">Hola! Quiero conocerte un poco mejor 💫</h1>
-      <p class="step-sub">Esto no es una entrevista de trabajo ni nada formal. Son solo un par de preguntas rápidas y relajadas para saber a qué te dedicas, en qué eres bueno/a, y si hay alguna forma en la que podamos ayudarnos mutuamente. Tómate 3 minutos, sin presión 🙂</p>
-      <div class="nav"><button type="button" class="btn-primary next-btn">Empezar ✨</button></div>
+      <p class="step-kicker" data-i18n="s0_kicker">Antes de empezar</p>
+      <h1 class="step-title" data-i18n="s0_title">Hola! Quiero conocerte un poco mejor 💫</h1>
+      <p class="step-sub" data-i18n="s0_sub">Esto no es una entrevista de trabajo ni nada formal. Son solo un par de preguntas rápidas y relajadas para saber a qué te dedicas, en qué eres bueno/a, y si hay alguna forma en la que podamos ayudarnos mutuamente. Tómate 3 minutos, sin presión 🙂</p>
+      <div class="nav"><button type="button" class="btn-primary next-btn" data-i18n="s0_btn">Empezar ✨</button></div>
     </div>
 
     <div class="card hidden-step" data-step="1">
       <span class="step-emoji">🙋</span>
-      <p class="step-kicker">Lo básico</p>
-      <h1 class="step-title">¿Cómo te llamas?</h1>
-      <input class="field" type="text" name="nombre" placeholder="Tu nombre" required>
+      <p class="step-kicker" data-i18n="s1_kicker">Lo básico</p>
+      <h1 class="step-title" data-i18n="s1_title">¿Cómo te llamas?</h1>
+      <input class="field" type="text" name="nombre" data-i18n-placeholder="s1_placeholder" placeholder="Tu nombre" required>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn">Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next">Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="2" id="contactStep">
       <span class="step-emoji">📬</span>
-      <p class="step-kicker">Para escribirte</p>
-      <h1 class="step-title">Déjame tu correo y/o WhatsApp</h1>
-      <p class="step-sub">Compárteme al menos uno de los dos, el que prefieras. Si quieres darme ambos, mejor 😉</p>
+      <p class="step-kicker" data-i18n="s2_kicker">Para escribirte</p>
+      <h1 class="step-title" data-i18n="s2_title">Déjame tu correo y/o WhatsApp</h1>
+      <p class="step-sub" data-i18n="s2_sub">Compárteme al menos uno de los dos, el que prefieras. Si quieres darme ambos, mejor 😉</p>
 
-      <p class="field-label">Correo electrónico</p>
-      <input class="field" type="email" name="email" id="emailInput" placeholder="correo@ejemplo.com">
+      <p class="field-label" data-i18n="s2_email_label">Correo electrónico</p>
+      <input class="field" type="email" name="email" id="emailInput" data-i18n-placeholder="s2_email_placeholder" placeholder="correo@ejemplo.com">
 
-      <div class="or-divider">o también</div>
+      <div class="or-divider" data-i18n="s2_or">o también</div>
 
-      <p class="field-label">WhatsApp</p>
+      <p class="field-label" data-i18n="s2_phone_label">WhatsApp</p>
       <div class="phone-row">
         <button type="button" class="country-btn" id="countryBtn">
           <span class="flag" id="countryFlag">🌐</span>
-          <span id="countryDial">Código</span>
+          <span id="countryDial" data-i18n="s2_code">Código</span>
           <span class="chev">▾</span>
         </button>
-        <input class="field" type="tel" inputmode="numeric" pattern="[0-9]*" name="telefono" id="phoneInput" placeholder="Número" disabled>
+        <input class="field" type="tel" inputmode="numeric" pattern="[0-9]*" name="telefono" id="phoneInput" data-i18n-placeholder="s2_phone_placeholder" placeholder="Número" disabled>
       </div>
-      <p class="hint" id="phoneHint">Primero elige tu país para habilitar el campo del número.</p>
+      <p class="hint" id="phoneHint" data-i18n="s2_phone_hint">Primero elige tu país para habilitar el campo del número.</p>
 
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" id="contactNextBtn" disabled>Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" id="contactNextBtn" data-i18n="next" disabled>Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="3">
       <span class="step-emoji">💼</span>
-      <p class="step-kicker">Pregunta 1</p>
-      <h1 class="step-title">¿A qué te dedicas hoy en día?</h1>
+      <p class="step-kicker" data-i18n="s3_kicker">Pregunta 1</p>
+      <h1 class="step-title" data-i18n="s3_title">¿A qué te dedicas hoy en día?</h1>
       <div class="options" data-name="ocupacion" data-type="single">
-        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🎓</span> Estudio</label>
-        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">💻</span> Trabajo freelance</label>
-        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🏢</span> Tengo un empleo fijo</label>
-        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🚀</span> Tengo mi propio negocio</label>
-        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🔎</span> Ando buscando oportunidades</label>
-        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🧩</span> Un poco de todo lo anterior</label>
+        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🎓</span> <span data-i18n="opt_estudio">Estudio</span></label>
+        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">💻</span> <span data-i18n="opt_freelance">Trabajo freelance</span></label>
+        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🏢</span> <span data-i18n="opt_empleo">Tengo un empleo fijo</span></label>
+        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🚀</span> <span data-i18n="opt_negocio">Tengo mi propio negocio</span></label>
+        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🔎</span> <span data-i18n="opt_buscando">Ando buscando oportunidades</span></label>
+        <label class="opt"><input type="radio" name="ocupacion"><span class="emo">🧩</span> <span data-i18n="opt_mezcla">Un poco de todo lo anterior</span></label>
       </div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" disabled>Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next" disabled>Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="4">
       <span class="step-emoji">🌟</span>
-      <p class="step-kicker">Pregunta 2</p>
-      <h1 class="step-title">¿En qué se te reconoce que eres bueno/a?</h1>
-      <p class="step-sub">Elige todas las que sientas que van contigo</p>
+      <p class="step-kicker" data-i18n="s4_kicker">Pregunta 2</p>
+      <h1 class="step-title" data-i18n="s4_title">¿En qué se te reconoce que eres bueno/a?</h1>
+      <p class="step-sub" data-i18n="s4_sub">Elige todas las que sientas que van contigo</p>
       <div class="chips" data-name="talentos" data-type="multi">
-        <label class="chip"><input type="checkbox"><span class="emo">📱</span> Redes sociales</label>
-        <label class="chip"><input type="checkbox"><span class="emo">🎥</span> Crear contenido / video</label>
-        <label class="chip"><input type="checkbox"><span class="emo">🎨</span> Diseño</label>
-        <label class="chip"><input type="checkbox"><span class="emo">📸</span> Fotografía</label>
-        <label class="chip"><input type="checkbox"><span class="emo">💬</span> Hablar / convencer gente</label>
-        <label class="chip"><input type="checkbox"><span class="emo">💰</span> Ventas</label>
-        <label class="chip"><input type="checkbox"><span class="emo">📦</span> Organización / logística</label>
-        <label class="chip"><input type="checkbox"><span class="emo">💻</span> Tecnología</label>
-        <label class="chip"><input type="checkbox"><span class="emo">🤖</span> Inteligencia artificial</label>
-        <label class="chip"><input type="checkbox"><span class="emo">🧴</span> Belleza / skincare</label>
-        <label class="chip"><input type="checkbox"><span class="emo">🎧</span> Escuchar y entender a otros</label>
-        <label class="chip"><input type="checkbox" id="otroTalentoCheck"><span class="emo">✨</span> Otra cosa</label>
+        <label class="chip"><input type="checkbox"><span class="emo">📱</span> <span data-i18n="tal_redes">Redes sociales</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">🎥</span> <span data-i18n="tal_contenido">Crear contenido / video</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">🎨</span> <span data-i18n="tal_diseno">Diseño</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">📸</span> <span data-i18n="tal_foto">Fotografía</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">💬</span> <span data-i18n="tal_hablar">Hablar / convencer gente</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">💰</span> <span data-i18n="tal_ventas">Ventas</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">📦</span> <span data-i18n="tal_logistica">Organización / logística</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">💻</span> <span data-i18n="tal_tecnologia">Tecnología</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">🤖</span> <span data-i18n="tal_ia">Inteligencia artificial</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">🧴</span> <span data-i18n="tal_belleza">Belleza / skincare</span></label>
+        <label class="chip"><input type="checkbox"><span class="emo">🎧</span> <span data-i18n="tal_escuchar">Escuchar y entender a otros</span></label>
+        <label class="chip"><input type="checkbox" id="otroTalentoCheck"><span class="emo">✨</span> <span data-i18n="tal_otro">Otra cosa</span></label>
       </div>
       <div id="otroTalentoWrap" style="display:none;">
-        <p class="field-label">Cuéntame cuál</p>
-        <input class="field" type="text" id="otroTalentoInput" placeholder="Especifica en qué eres bueno/a">
+        <p class="field-label" data-i18n="tal_otro_label">Cuéntame cuál</p>
+        <input class="field" type="text" id="otroTalentoInput" data-i18n-placeholder="tal_otro_placeholder" placeholder="Especifica en qué eres bueno/a">
       </div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" id="talentosNextBtn">Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" id="talentosNextBtn" data-i18n="next">Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="5">
       <span class="step-emoji">🦸</span>
-      <p class="step-kicker">Pregunta 3</p>
-      <h1 class="step-title">Si tu superpoder en el día a día fuera una palabra, ¿cuál sería?</h1>
-      <input class="field" type="text" name="superpoder" placeholder="Ej: creatividad, paciencia, orden...">
+      <p class="step-kicker" data-i18n="s5_kicker">Pregunta 3</p>
+      <h1 class="step-title" data-i18n="s5_title">Si tu superpoder en el día a día fuera una palabra, ¿cuál sería?</h1>
+      <input class="field" type="text" name="superpoder" data-i18n-placeholder="s5_placeholder" placeholder="Ej: creatividad, paciencia, orden...">
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn">Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next">Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="6">
       <span class="step-emoji">🎯</span>
-      <p class="step-kicker">Pregunta 4</p>
-      <h1 class="step-title">¿Qué te gustaría que pase en los próximos meses?</h1>
-      <p class="step-sub">Puedes elegir una sola opción o varias, lo que sientas que aplica para ti.</p>
+      <p class="step-kicker" data-i18n="s6_kicker">Pregunta 4</p>
+      <h1 class="step-title" data-i18n="s6_title">¿Qué te gustaría que pase en los próximos meses?</h1>
+      <p class="step-sub" data-i18n="s6_sub">Puedes elegir una sola opción o varias, lo que sientas que aplica para ti.</p>
       <div class="options" data-name="meta" data-type="multi">
-        <label class="opt"><input type="checkbox" name="meta"><span class="emo">💵</span> Ganar un ingreso extra</label>
-        <label class="opt"><input type="checkbox" name="meta"><span class="emo">📈</span> Crecer profesionalmente</label>
-        <label class="opt"><input type="checkbox" name="meta"><span class="emo">🧠</span> Aprender algo nuevo</label>
-        <label class="opt"><input type="checkbox" name="meta"><span class="emo">🏆</span> Tener mi propio negocio o marca</label>
-        <label class="opt"><input type="checkbox" name="meta"><span class="emo">👀</span> Solo tenía curiosidad</label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">💵</span> <span data-i18n="meta_ingreso">Ganar un ingreso extra</span></label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">📈</span> <span data-i18n="meta_crecer">Crecer profesionalmente</span></label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">🧠</span> <span data-i18n="meta_aprender">Aprender algo nuevo</span></label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">🏆</span> <span data-i18n="meta_negocio">Tener mi propio negocio o marca</span></label>
+        <label class="opt"><input type="checkbox" name="meta"><span class="emo">👀</span> <span data-i18n="meta_curiosidad">Solo tenía curiosidad</span></label>
       </div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" disabled>Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next" disabled>Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="7">
       <span class="step-emoji">📲</span>
-      <p class="step-kicker">Pregunta 5</p>
-      <h1 class="step-title">¿Qué tanto te llama la atención el mundo digital? (redes, contenido, marcas online)</h1>
+      <p class="step-kicker" data-i18n="s7_kicker">Pregunta 5</p>
+      <h1 class="step-title" data-i18n="s7_title">¿Qué tanto te llama la atención el mundo digital? (redes, contenido, marcas online)</h1>
       <div class="scale" data-name="interes_digital" data-type="single">
-        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">😐</span><small>Nada</small></label>
-        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">🙂</span><small>Algo</small></label>
-        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">😃</span><small>Bastante</small></label>
-        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">🤩</span><small>Mucho</small></label>
+        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">😐</span><small data-i18n="scale_nada">Nada</small></label>
+        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">🙂</span><small data-i18n="scale_algo">Algo</small></label>
+        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">😃</span><small data-i18n="scale_bastante">Bastante</small></label>
+        <label class="opt"><input type="radio" name="interes_digital"><span class="emo">🤩</span><small data-i18n="scale_mucho">Mucho</small></label>
       </div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" disabled>Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next" disabled>Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="8">
       <span class="step-emoji">🏷️</span>
-      <p class="step-kicker">Pregunta 6</p>
-      <h1 class="step-title">¿Alguna vez has pensado en tener tu propia marca o negocio?</h1>
+      <p class="step-kicker" data-i18n="s8_kicker">Pregunta 6</p>
+      <h1 class="step-title" data-i18n="s8_title">¿Alguna vez has pensado en tener tu propia marca o negocio?</h1>
       <div class="options" data-name="marca_propia" data-type="single">
-        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">🔥</span> Sí, todo el tiempo</label>
-        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">💭</span> Lo he pensado alguna vez</label>
-        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">🤔</span> No mucho, la verdad</label>
-        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">💡</span> Nunca lo había pensado, pero suena bien</label>
+        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">🔥</span> <span data-i18n="marca_todo_tiempo">Sí, todo el tiempo</span></label>
+        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">💭</span> <span data-i18n="marca_alguna_vez">Lo he pensado alguna vez</span></label>
+        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">🤔</span> <span data-i18n="marca_no_mucho">No mucho, la verdad</span></label>
+        <label class="opt"><input type="radio" name="marca_propia"><span class="emo">💡</span> <span data-i18n="marca_nunca">Nunca lo había pensado, pero suena bien</span></label>
       </div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" disabled>Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next" disabled>Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="9">
       <span class="step-emoji">🎬</span>
-      <p class="step-kicker">Pregunta 7</p>
-      <h1 class="step-title">¿Qué tan cómodo/a te sentirías siendo la cara de un producto o marca en redes?</h1>
+      <p class="step-kicker" data-i18n="s9_kicker">Pregunta 7</p>
+      <h1 class="step-title" data-i18n="s9_title">¿Qué tan cómodo/a te sentirías siendo la cara de un producto o marca en redes?</h1>
       <div class="options" data-name="cara_marca" data-type="single">
-        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">😍</span> Me encantaría</label>
-        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">🙂</span> Podría intentarlo</label>
-        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">🤷</span> No estoy segura/o</label>
-        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">🙅</span> No es lo mío</label>
+        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">😍</span> <span data-i18n="cara_encantaria">Me encantaría</span></label>
+        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">🙂</span> <span data-i18n="cara_intentaria">Podría intentarlo</span></label>
+        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">🤷</span> <span data-i18n="cara_no_segura">No estoy segura/o</span></label>
+        <label class="opt"><input type="radio" name="cara_marca"><span class="emo">🙅</span> <span data-i18n="cara_no_mio">No es lo mío</span></label>
       </div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn" disabled>Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next" disabled>Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="10">
       <span class="step-emoji">💭</span>
-      <p class="step-kicker">Pregunta 8</p>
-      <h1 class="step-title">Cuéntame algo random que te apasione o en lo que la gente siempre te pide ayuda</h1>
-      <textarea class="field" name="random" placeholder="Escribe lo que sientas, sin pensarlo mucho 😄"></textarea>
+      <p class="step-kicker" data-i18n="s10_kicker">Pregunta 8</p>
+      <h1 class="step-title" data-i18n="s10_title">Cuéntame algo random que te apasione o en lo que la gente siempre te pide ayuda</h1>
+      <textarea class="field" name="random" data-i18n-placeholder="s10_placeholder" placeholder="Escribe lo que sientas, sin pensarlo mucho 😄"></textarea>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn">Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next">Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="11">
       <span class="step-emoji">📄</span>
-      <p class="step-kicker">Último paso</p>
-      <h1 class="step-title">¿Quieres compartir tu CV? <span class="badge-optional">Opcional</span></h1>
-      <p class="step-sub">Solo si tienes uno a la mano. No es obligatorio para nada.</p>
+      <p class="step-kicker" data-i18n="s11_kicker">Último paso</p>
+      <h1 class="step-title"><span data-i18n="s11_title">¿Quieres compartir tu CV?</span> <span class="badge-optional" data-i18n="optional">Opcional</span></h1>
+      <p class="step-sub" data-i18n="s11_sub">Solo si tienes uno a la mano. No es obligatorio para nada.</p>
       <label class="file-drop" id="fileDrop">
         <input type="file" name="cv" id="cvInput" accept=".pdf,.doc,.docx,image/*">
-        <div>📎 Toca para subir tu CV</div>
+        <div data-i18n="s11_upload">📎 Toca para subir tu CV</div>
         <div class="file-name" id="fileName"></div>
       </label>
-      <p class="hint">También puedes dejar aquí tu Instagram o TikTok si quieres 👇</p>
-      <input class="field" style="margin-top:10px;" type="text" name="redes" placeholder="@tuusuario (opcional)">
+      <p class="hint" data-i18n="s11_social_hint">También puedes dejar aquí tu Instagram o TikTok si quieres 👇</p>
+      <input class="field" style="margin-top:10px;" type="text" name="redes" data-i18n-placeholder="s11_social_placeholder" placeholder="@tuusuario (opcional)">
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="button" class="btn-primary next-btn">Siguiente</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="button" class="btn-primary next-btn" data-i18n="next">Siguiente</button>
       </div>
     </div>
 
     <div class="card hidden-step" data-step="12">
       <span class="step-emoji">🚀</span>
-      <p class="step-kicker">Todo listo</p>
-      <h1 class="step-title">¡Eso es todo! Gracias por tu tiempo</h1>
-      <p class="step-sub">Voy a leer tus respuestas con calma. Si veo que hay buena onda para colaborar de alguna forma, te escribo pronto 💌</p>
-      <div class="error-msg" id="errorMsg">Ups, algo salió mal enviando el formulario. Intenta de nuevo.</div>
+      <p class="step-kicker" data-i18n="s12_kicker">Todo listo</p>
+      <h1 class="step-title" data-i18n="s12_title">¡Eso es todo! Gracias por tu tiempo</h1>
+      <p class="step-sub" data-i18n="s12_sub">Voy a leer tus respuestas con calma. Si veo que hay buena onda para colaborar de alguna forma, te escribo pronto 💌</p>
+      <div class="error-msg" id="errorMsg" data-i18n="error_msg">Ups, algo salió mal enviando el formulario. Intenta de nuevo.</div>
       <div class="nav">
-        <button type="button" class="btn-ghost back-btn">Atrás</button>
-        <button type="submit" class="btn-primary" id="submitBtn">Enviar respuestas ✨</button>
+        <button type="button" class="btn-ghost back-btn" data-i18n="back">Atrás</button>
+        <button type="submit" class="btn-primary" id="submitBtn" data-i18n="submit_default">Enviar respuestas ✨</button>
       </div>
     </div>
   </form>
@@ -725,9 +736,9 @@
   <div class="country-overlay" id="countryOverlay">
     <div class="country-sheet">
       <div class="country-sheet-head">
-        <h3>Elige tu país</h3>
+        <h3 data-i18n="country_pick">Elige tu país</h3>
         <button type="button" class="country-close" id="countryClose">✕</button>
-        <input type="text" class="country-search" id="countrySearch" placeholder="Busca por país o código, ej: Honduras o 504">
+        <input type="text" class="country-search" id="countrySearch" data-i18n-placeholder="country_search" placeholder="Busca por país o código, ej: Honduras o 504">
       </div>
       <div class="country-list" id="countryList"></div>
     </div>
@@ -735,11 +746,11 @@
 
   <div class="card" id="screen-success">
     <span class="step-emoji">🎉</span>
-    <h1 class="step-title">¡Listo! Ya me llegó todo 💫</h1>
-    <p class="step-sub">Gracias por tomarte el tiempo de contarme sobre ti. Nos vemos pronto 👋</p>
+    <h1 class="step-title" data-i18n="success_title">¡Listo! Ya me llegó todo 💫</h1>
+    <p class="step-sub" data-i18n="success_sub">Gracias por tomarte el tiempo de contarme sobre ti. Nos vemos pronto 👋</p>
   </div>
 
-  <footer class="disclaimer">Tus respuestas se envían de forma privada. Nada se comparte ni se publica en ningún lugar 🔒</footer>
+  <footer class="disclaimer" data-i18n="disclaimer">Tus respuestas se envían de forma privada. Nada se comparte ni se publica en ningún lugar 🔒</footer>
 </div>
 
 <script>
@@ -750,24 +761,159 @@
   var WEB3FORMS_ACCESS_KEY = "PON_AQUI_TU_ACCESS_KEY_DE_WEB3FORMS";
   // --------------------------------------------------------------
 
+  // ------- Traducciones -------
+  var I18N = {
+    brand: {es:'Cuéntame de ti', en:'Tell me about you'},
+    back: {es:'Atrás', en:'Back'},
+    next: {es:'Siguiente', en:'Next'},
+    optional: {es:'Opcional', en:'Optional'},
+    s0_kicker: {es:'Antes de empezar', en:'Before we start'},
+    s0_title: {es:'Hola! Quiero conocerte un poco mejor 💫', en:'Hey! I want to get to know you a bit better 💫'},
+    s0_sub: {es:'Esto no es una entrevista de trabajo ni nada formal. Son solo un par de preguntas rápidas y relajadas para saber a qué te dedicas, en qué eres bueno/a, y si hay alguna forma en la que podamos ayudarnos mutuamente. Tómate 3 minutos, sin presión 🙂', en:'This isn\'t a job interview or anything formal. Just a few quick, relaxed questions to find out what you do, what you\'re good at, and whether there\'s any way we could help each other out. Take 3 minutes, no pressure 🙂'},
+    s0_btn: {es:'Empezar ✨', en:'Start ✨'},
+    s1_kicker: {es:'Lo básico', en:'The basics'},
+    s1_title: {es:'¿Cómo te llamas?', en:'What\'s your name?'},
+    s1_placeholder: {es:'Tu nombre', en:'Your name'},
+    s2_kicker: {es:'Para escribirte', en:'So I can reach you'},
+    s2_title: {es:'Déjame tu correo y/o WhatsApp', en:'Leave me your email and/or WhatsApp'},
+    s2_sub: {es:'Compárteme al menos uno de los dos, el que prefieras. Si quieres darme ambos, mejor 😉', en:'Share at least one of the two, whichever you prefer. If you want to give me both, even better 😉'},
+    s2_email_label: {es:'Correo electrónico', en:'Email'},
+    s2_email_placeholder: {es:'correo@ejemplo.com', en:'email@example.com'},
+    s2_or: {es:'o también', en:'or also'},
+    s2_phone_label: {es:'WhatsApp', en:'WhatsApp'},
+    s2_code: {es:'Código', en:'Code'},
+    s2_phone_placeholder: {es:'Número', en:'Number'},
+    s2_phone_hint: {es:'Primero elige tu país para habilitar el campo del número.', en:'First choose your country to enable the number field.'},
+    s3_kicker: {es:'Pregunta 1', en:'Question 1'},
+    s3_title: {es:'¿A qué te dedicas hoy en día?', en:'What do you do these days?'},
+    opt_estudio: {es:'Estudio', en:'I\'m a student'},
+    opt_freelance: {es:'Trabajo freelance', en:'I freelance'},
+    opt_empleo: {es:'Tengo un empleo fijo', en:'I have a full-time job'},
+    opt_negocio: {es:'Tengo mi propio negocio', en:'I run my own business'},
+    opt_buscando: {es:'Ando buscando oportunidades', en:'I\'m looking for opportunities'},
+    opt_mezcla: {es:'Un poco de todo lo anterior', en:'A bit of all of the above'},
+    s4_kicker: {es:'Pregunta 2', en:'Question 2'},
+    s4_title: {es:'¿En qué se te reconoce que eres bueno/a?', en:'What are you known for being good at?'},
+    s4_sub: {es:'Elige todas las que sientas que van contigo', en:'Pick all the ones that feel like you'},
+    tal_redes: {es:'Redes sociales', en:'Social media'},
+    tal_contenido: {es:'Crear contenido / video', en:'Creating content / video'},
+    tal_diseno: {es:'Diseño', en:'Design'},
+    tal_foto: {es:'Fotografía', en:'Photography'},
+    tal_hablar: {es:'Hablar / convencer gente', en:'Talking / persuading people'},
+    tal_ventas: {es:'Ventas', en:'Sales'},
+    tal_logistica: {es:'Organización / logística', en:'Organization / logistics'},
+    tal_tecnologia: {es:'Tecnología', en:'Technology'},
+    tal_ia: {es:'Inteligencia artificial', en:'Artificial intelligence'},
+    tal_belleza: {es:'Belleza / skincare', en:'Beauty / skincare'},
+    tal_escuchar: {es:'Escuchar y entender a otros', en:'Listening and understanding others'},
+    tal_otro: {es:'Otra cosa', en:'Something else'},
+    tal_otro_label: {es:'Cuéntame cuál', en:'Tell me which one'},
+    tal_otro_placeholder: {es:'Especifica en qué eres bueno/a', en:'Specify what you\'re good at'},
+    s5_kicker: {es:'Pregunta 3', en:'Question 3'},
+    s5_title: {es:'Si tu superpoder en el día a día fuera una palabra, ¿cuál sería?', en:'If your everyday superpower were one word, what would it be?'},
+    s5_placeholder: {es:'Ej: creatividad, paciencia, orden...', en:'E.g: creativity, patience, organization...'},
+    s6_kicker: {es:'Pregunta 4', en:'Question 4'},
+    s6_title: {es:'¿Qué te gustaría que pase en los próximos meses?', en:'What would you like to happen in the coming months?'},
+    s6_sub: {es:'Puedes elegir una sola opción o varias, lo que sientas que aplica para ti.', en:'You can pick just one option or several, whatever feels right for you.'},
+    meta_ingreso: {es:'Ganar un ingreso extra', en:'Earn some extra income'},
+    meta_crecer: {es:'Crecer profesionalmente', en:'Grow professionally'},
+    meta_aprender: {es:'Aprender algo nuevo', en:'Learn something new'},
+    meta_negocio: {es:'Tener mi propio negocio o marca', en:'Have my own business or brand'},
+    meta_curiosidad: {es:'Solo tenía curiosidad', en:'I was just curious'},
+    s7_kicker: {es:'Pregunta 5', en:'Question 5'},
+    s7_title: {es:'¿Qué tanto te llama la atención el mundo digital? (redes, contenido, marcas online)', en:'How much does the digital world interest you? (social media, content, online brands)'},
+    scale_nada: {es:'Nada', en:'Not at all'},
+    scale_algo: {es:'Algo', en:'A bit'},
+    scale_bastante: {es:'Bastante', en:'Quite a lot'},
+    scale_mucho: {es:'Mucho', en:'A lot'},
+    s8_kicker: {es:'Pregunta 6', en:'Question 6'},
+    s8_title: {es:'¿Alguna vez has pensado en tener tu propia marca o negocio?', en:'Have you ever thought about having your own brand or business?'},
+    marca_todo_tiempo: {es:'Sí, todo el tiempo', en:'Yes, all the time'},
+    marca_alguna_vez: {es:'Lo he pensado alguna vez', en:'I\'ve thought about it once or twice'},
+    marca_no_mucho: {es:'No mucho, la verdad', en:'Not really, to be honest'},
+    marca_nunca: {es:'Nunca lo había pensado, pero suena bien', en:'Never thought about it, but sounds nice'},
+    s9_kicker: {es:'Pregunta 7', en:'Question 7'},
+    s9_title: {es:'¿Qué tan cómodo/a te sentirías siendo la cara de un producto o marca en redes?', en:'How comfortable would you feel being the face of a product or brand on social media?'},
+    cara_encantaria: {es:'Me encantaría', en:'I\'d love it'},
+    cara_intentaria: {es:'Podría intentarlo', en:'I could give it a try'},
+    cara_no_segura: {es:'No estoy segura/o', en:'I\'m not sure'},
+    cara_no_mio: {es:'No es lo mío', en:'Not really my thing'},
+    s10_kicker: {es:'Pregunta 8', en:'Question 8'},
+    s10_title: {es:'Cuéntame algo random que te apasione o en lo que la gente siempre te pide ayuda', en:'Tell me something random you\'re passionate about, or something people always ask you for help with'},
+    s10_placeholder: {es:'Escribe lo que sientas, sin pensarlo mucho 😄', en:'Write whatever comes to mind, don\'t overthink it 😄'},
+    s11_kicker: {es:'Último paso', en:'Last step'},
+    s11_title: {es:'¿Quieres compartir tu CV?', en:'Want to share your resume?'},
+    s11_sub: {es:'Solo si tienes uno a la mano. No es obligatorio para nada.', en:'Only if you have one handy. It\'s not required at all.'},
+    s11_upload: {es:'📎 Toca para subir tu CV', en:'📎 Tap to upload your resume'},
+    s11_social_hint: {es:'También puedes dejar aquí tu Instagram o TikTok si quieres 👇', en:'You can also leave your Instagram or TikTok here if you\'d like 👇'},
+    s11_social_placeholder: {es:'@tuusuario (opcional)', en:'@yourhandle (optional)'},
+    s12_kicker: {es:'Todo listo', en:'All set'},
+    s12_title: {es:'¡Eso es todo! Gracias por tu tiempo', en:'That\'s it! Thanks for your time'},
+    s12_sub: {es:'Voy a leer tus respuestas con calma. Si veo que hay buena onda para colaborar de alguna forma, te escribo pronto 💌', en:'I\'ll read your answers carefully. If it looks like there\'s a good fit to collaborate somehow, I\'ll reach out soon 💌'},
+    error_msg: {es:'Ups, algo salió mal enviando el formulario. Intenta de nuevo.', en:'Oops, something went wrong sending the form. Please try again.'},
+    submit_default: {es:'Enviar respuestas ✨', en:'Send answers ✨'},
+    submit_sending: {es:'Enviando...', en:'Sending...'},
+    country_pick: {es:'Elige tu país', en:'Choose your country'},
+    country_search: {es:'Busca por país o código, ej: Honduras o 504', en:'Search by country or code, e.g: Honduras or 504'},
+    success_title: {es:'¡Listo! Ya me llegó todo 💫', en:'All done! It already got to me 💫'},
+    success_sub: {es:'Gracias por tomarte el tiempo de contarme sobre ti. Nos vemos pronto 👋', en:'Thanks for taking the time to tell me about yourself. See you soon 👋'},
+    disclaimer: {es:'Tus respuestas se envían de forma privada. Nada se comparte ni se publica en ningún lugar 🔒', en:'Your answers are sent privately. Nothing is shared or posted anywhere 🔒'},
+    theme_to_dark: {es:'Cambiar a modo oscuro', en:'Switch to dark mode'},
+    theme_to_light: {es:'Cambiar a modo claro', en:'Switch to light mode'},
+    phone_hint_selected: {es:'Solo escribe tus {n} dígitos, sin el código de país.', en:'Just type your {n} digits, without the country code.'},
+    phone_placeholder_selected: {es:'Número ({n} dígitos)', en:'Number ({n} digits)'}
+  };
+
+  var currentLang = 'es';
+  function t(key){
+    var entry = I18N[key];
+    if(!entry) return '';
+    return entry[currentLang] || entry.es;
+  }
+
+  function translatePage(){
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      el.textContent = t(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+      el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+    });
+    document.documentElement.lang = currentLang;
+    langToggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
+    themeToggle.setAttribute('aria-label', document.documentElement.getAttribute('data-theme') === 'dark' ? t('theme_to_light') : t('theme_to_dark'));
+    refreshCountryDynamicTexts();
+    renderCountryList(countrySearch.value.trim() ? filterCountries(countrySearch.value) : COUNTRIES);
+  }
+
+  function setLanguage(lang){
+    currentLang = lang === 'en' ? 'en' : 'es';
+    try{ localStorage.setItem('cuentame-lang', currentLang); }catch(e){}
+    translatePage();
+  }
+
+  var langToggle = document.getElementById('langToggle');
+  langToggle.addEventListener('click', function(){
+    setLanguage(currentLang === 'es' ? 'en' : 'es');
+  });
+  // -----------------------------
+
   // ------- Modo oscuro -------
   var themeToggle = document.getElementById('themeToggle');
   function applyTheme(theme){
     document.documentElement.setAttribute('data-theme', theme);
     themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-    themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    themeToggle.setAttribute('aria-label', theme === 'dark' ? t('theme_to_light') : t('theme_to_dark'));
     try{ localStorage.setItem('cuentame-theme', theme); }catch(e){}
   }
   var initialTheme = 'light';
   try{
-    var stored = localStorage.getItem('cuentame-theme');
-    if(stored === 'dark' || stored === 'light'){
-      initialTheme = stored;
+    var storedTheme = localStorage.getItem('cuentame-theme');
+    if(storedTheme === 'dark' || storedTheme === 'light'){
+      initialTheme = storedTheme;
     } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
       initialTheme = 'dark';
     }
   }catch(e){}
-  applyTheme(initialTheme);
   themeToggle.addEventListener('click', function(){
     var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(next);
@@ -787,24 +933,6 @@
     progressFill.style.width = Math.max(4,pct) + '%';
     stepCounter.textContent = (i+1) + '/' + total;
     window.scrollTo({top:0,behavior:'smooth'});
-  }
-
-  function validateStep(i){
-    var step = steps[i];
-    var req = step.querySelectorAll('[required]');
-    for (var j=0;j<req.length;j++){
-      if(!req[j].value || !req[j].value.trim()) return false;
-    }
-    var group = step.querySelector('.options, .scale');
-    if(group && group.dataset.type === 'single'){
-      var checked = group.querySelector('input[type=radio]:checked');
-      if(!checked) return false;
-    }
-    if(group && group.dataset.type === 'multi'){
-      var anyChecked = group.querySelector('input[type=checkbox]:checked');
-      if(!anyChecked) return false;
-    }
-    return true;
   }
 
   function refreshNextBtn(i){
@@ -869,35 +997,37 @@
 
   // ------- Selector de país / WhatsApp -------
   var COUNTRIES = [
-    {name:'Argentina', flag:'🇦🇷', dial:'+54', digits:10},
-    {name:'Bolivia', flag:'🇧🇴', dial:'+591', digits:8},
-    {name:'Brasil', flag:'🇧🇷', dial:'+55', digits:11},
-    {name:'Canadá', flag:'🇨🇦', dial:'+1', digits:10},
-    {name:'Chile', flag:'🇨🇱', dial:'+56', digits:9},
-    {name:'Colombia', flag:'🇨🇴', dial:'+57', digits:10},
-    {name:'Costa Rica', flag:'🇨🇷', dial:'+506', digits:8},
-    {name:'Cuba', flag:'🇨🇺', dial:'+53', digits:8},
-    {name:'Ecuador', flag:'🇪🇨', dial:'+593', digits:9},
-    {name:'El Salvador', flag:'🇸🇻', dial:'+503', digits:8},
-    {name:'España', flag:'🇪🇸', dial:'+34', digits:9},
-    {name:'Estados Unidos', flag:'🇺🇸', dial:'+1', digits:10},
-    {name:'Francia', flag:'🇫🇷', dial:'+33', digits:9},
-    {name:'Alemania', flag:'🇩🇪', dial:'+49', digits:11},
-    {name:'Guatemala', flag:'🇬🇹', dial:'+502', digits:8},
-    {name:'Honduras', flag:'🇭🇳', dial:'+504', digits:8},
-    {name:'Italia', flag:'🇮🇹', dial:'+39', digits:10},
-    {name:'México', flag:'🇲🇽', dial:'+52', digits:10},
-    {name:'Nicaragua', flag:'🇳🇮', dial:'+505', digits:8},
-    {name:'Panamá', flag:'🇵🇦', dial:'+507', digits:8},
-    {name:'Paraguay', flag:'🇵🇾', dial:'+595', digits:9},
-    {name:'Perú', flag:'🇵🇪', dial:'+51', digits:9},
-    {name:'Portugal', flag:'🇵🇹', dial:'+351', digits:9},
-    {name:'Puerto Rico', flag:'🇵🇷', dial:'+1', digits:10},
-    {name:'Reino Unido', flag:'🇬🇧', dial:'+44', digits:10},
-    {name:'República Dominicana', flag:'🇩🇴', dial:'+1', digits:10},
-    {name:'Uruguay', flag:'🇺🇾', dial:'+598', digits:8},
-    {name:'Venezuela', flag:'🇻🇪', dial:'+58', digits:10}
+    {name:'Argentina', nameEn:'Argentina', flag:'🇦🇷', dial:'+54', digits:10},
+    {name:'Bolivia', nameEn:'Bolivia', flag:'🇧🇴', dial:'+591', digits:8},
+    {name:'Brasil', nameEn:'Brazil', flag:'🇧🇷', dial:'+55', digits:11},
+    {name:'Canadá', nameEn:'Canada', flag:'🇨🇦', dial:'+1', digits:10},
+    {name:'Chile', nameEn:'Chile', flag:'🇨🇱', dial:'+56', digits:9},
+    {name:'Colombia', nameEn:'Colombia', flag:'🇨🇴', dial:'+57', digits:10},
+    {name:'Costa Rica', nameEn:'Costa Rica', flag:'🇨🇷', dial:'+506', digits:8},
+    {name:'Cuba', nameEn:'Cuba', flag:'🇨🇺', dial:'+53', digits:8},
+    {name:'Ecuador', nameEn:'Ecuador', flag:'🇪🇨', dial:'+593', digits:9},
+    {name:'El Salvador', nameEn:'El Salvador', flag:'🇸🇻', dial:'+503', digits:8},
+    {name:'España', nameEn:'Spain', flag:'🇪🇸', dial:'+34', digits:9},
+    {name:'Estados Unidos', nameEn:'United States', flag:'🇺🇸', dial:'+1', digits:10},
+    {name:'Francia', nameEn:'France', flag:'🇫🇷', dial:'+33', digits:9},
+    {name:'Alemania', nameEn:'Germany', flag:'🇩🇪', dial:'+49', digits:11},
+    {name:'Guatemala', nameEn:'Guatemala', flag:'🇬🇹', dial:'+502', digits:8},
+    {name:'Honduras', nameEn:'Honduras', flag:'🇭🇳', dial:'+504', digits:8},
+    {name:'Italia', nameEn:'Italy', flag:'🇮🇹', dial:'+39', digits:10},
+    {name:'México', nameEn:'Mexico', flag:'🇲🇽', dial:'+52', digits:10},
+    {name:'Nicaragua', nameEn:'Nicaragua', flag:'🇳🇮', dial:'+505', digits:8},
+    {name:'Panamá', nameEn:'Panama', flag:'🇵🇦', dial:'+507', digits:8},
+    {name:'Paraguay', nameEn:'Paraguay', flag:'🇵🇾', dial:'+595', digits:9},
+    {name:'Perú', nameEn:'Peru', flag:'🇵🇪', dial:'+51', digits:9},
+    {name:'Portugal', nameEn:'Portugal', flag:'🇵🇹', dial:'+351', digits:9},
+    {name:'Puerto Rico', nameEn:'Puerto Rico', flag:'🇵🇷', dial:'+1', digits:10},
+    {name:'Reino Unido', nameEn:'United Kingdom', flag:'🇬🇧', dial:'+44', digits:10},
+    {name:'República Dominicana', nameEn:'Dominican Republic', flag:'🇩🇴', dial:'+1', digits:10},
+    {name:'Uruguay', nameEn:'Uruguay', flag:'🇺🇾', dial:'+598', digits:8},
+    {name:'Venezuela', nameEn:'Venezuela', flag:'🇻🇪', dial:'+58', digits:10}
   ];
+
+  function countryLabel(c){ return currentLang === 'en' ? c.nameEn : c.name; }
 
   var selectedCountry = null;
   var countryBtn = document.getElementById('countryBtn');
@@ -913,11 +1043,23 @@
   var contactNextBtn = document.getElementById('contactNextBtn');
 
   function renderCountryList(list){
-    countryList.innerHTML = list.map(function(c, idx){
+    countryList.innerHTML = list.map(function(c){
       return '<div class="country-row" data-idx="' + COUNTRIES.indexOf(c) + '">' +
-        '<span class="flag">' + c.flag + '</span><span>' + c.name + '</span>' +
+        '<span class="flag">' + c.flag + '</span><span>' + countryLabel(c) + '</span>' +
         '<span class="dial">' + c.dial + '</span></div>';
     }).join('');
+  }
+  function filterCountries(q){
+    q = q.trim().toLowerCase();
+    return COUNTRIES.filter(function(c){
+      return c.name.toLowerCase().indexOf(q) !== -1 || c.nameEn.toLowerCase().indexOf(q) !== -1 || c.dial.indexOf(q) !== -1;
+    });
+  }
+  function refreshCountryDynamicTexts(){
+    if(selectedCountry){
+      phoneInput.placeholder = t('phone_placeholder_selected').replace('{n}', selectedCountry.digits);
+      phoneHint.textContent = t('phone_hint_selected').replace('{n}', selectedCountry.digits);
+    }
   }
   renderCountryList(COUNTRIES);
 
@@ -928,11 +1070,11 @@
     selectedCountry = country;
     countryFlag.textContent = country.flag;
     countryDial.textContent = country.dial;
+    countryDial.removeAttribute('data-i18n');
     phoneInput.disabled = false;
     phoneInput.value = '';
     phoneInput.maxLength = country.digits;
-    phoneInput.placeholder = 'Número (' + country.digits + ' dígitos)';
-    phoneHint.textContent = 'Solo escribe tus ' + country.digits + ' dígitos, sin el código de país.';
+    refreshCountryDynamicTexts();
     countryOverlay.classList.remove('open');
     refreshContactNextBtn();
     phoneInput.focus();
@@ -949,11 +1091,7 @@
     if(e.target === countryOverlay) countryOverlay.classList.remove('open');
   });
   countrySearch.addEventListener('input', function(){
-    var q = countrySearch.value.trim().toLowerCase();
-    var filtered = COUNTRIES.filter(function(c){
-      return c.name.toLowerCase().indexOf(q) !== -1 || c.dial.indexOf(q) !== -1;
-    });
-    renderCountryList(filtered);
+    renderCountryList(filterCountries(countrySearch.value));
   });
 
   phoneInput.addEventListener('input', function(){
@@ -1016,7 +1154,16 @@
     }
   }
 
+  // ------- Arranque -------
+  var initialLang = 'es';
+  try{
+    var storedLang = localStorage.getItem('cuentame-lang');
+    if(storedLang === 'en' || storedLang === 'es') initialLang = storedLang;
+  }catch(e){}
+  applyTheme(initialTheme);
+  setLanguage(initialLang);
   showStep(0);
+  // -------------------------
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -1024,7 +1171,7 @@
     var errorMsg = document.getElementById('errorMsg');
     errorMsg.style.display = 'none';
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
+    submitBtn.textContent = t('submit_sending');
 
     var fd = new FormData();
     fd.append('access_key', WEB3FORMS_ACCESS_KEY);
@@ -1089,7 +1236,7 @@
       .catch(function(err){
         errorMsg.style.display = 'block';
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Enviar respuestas ✨';
+        submitBtn.textContent = t('submit_default');
         console.error(err);
       });
   });
