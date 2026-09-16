@@ -897,27 +897,27 @@
   });
   // -----------------------------
 
-  // ------- Modo oscuro -------
+  // ------- Modo oscuro (siempre sigue al sistema) -------
   var themeToggle = document.getElementById('themeToggle');
   function applyTheme(theme){
     document.documentElement.setAttribute('data-theme', theme);
     themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
     themeToggle.setAttribute('aria-label', theme === 'dark' ? t('theme_to_light') : t('theme_to_dark'));
-    try{ localStorage.setItem('cuentame-theme', theme); }catch(e){}
   }
-  var initialTheme = 'light';
-  try{
-    var storedTheme = localStorage.getItem('cuentame-theme');
-    if(storedTheme === 'dark' || storedTheme === 'light'){
-      initialTheme = storedTheme;
-    } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
-      initialTheme = 'dark';
-    }
-  }catch(e){}
+  var darkModeQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  var initialTheme = (darkModeQuery && darkModeQuery.matches) ? 'dark' : 'light';
+  // El botón permite forzar un vistazo al otro tema durante la sesión,
+  // pero cada refresh (y cualquier cambio del tema del sistema mientras
+  // la página sigue abierta) vuelve a igualar exactamente al dispositivo.
   themeToggle.addEventListener('click', function(){
     var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     applyTheme(next);
   });
+  if(darkModeQuery){
+    var onSystemThemeChange = function(e){ applyTheme(e.matches ? 'dark' : 'light'); };
+    if(darkModeQuery.addEventListener) darkModeQuery.addEventListener('change', onSystemThemeChange);
+    else if(darkModeQuery.addListener) darkModeQuery.addListener(onSystemThemeChange);
+  }
   // ---------------------------
 
   var form = document.getElementById('interviewForm');
